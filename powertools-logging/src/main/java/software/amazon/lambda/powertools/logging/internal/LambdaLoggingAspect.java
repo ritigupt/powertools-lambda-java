@@ -15,7 +15,6 @@
 package software.amazon.lambda.powertools.logging.internal;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 import static software.amazon.lambda.powertools.core.internal.LambdaHandlerProcessor.coldStartDone;
 import static software.amazon.lambda.powertools.core.internal.LambdaHandlerProcessor.extractContext;
@@ -32,7 +31,6 @@ import static software.amazon.lambda.powertools.logging.internal.LoggingConstant
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.fasterxml.jackson.core.JsonPointer;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.ByteArrayInputStream;
@@ -279,14 +277,9 @@ public final class LambdaLoggingAspect {
         }
     }
 
-    private Optional<String> asJson(final ProceedingJoinPoint pjp,
+    private Optional<Object> asJson(final ProceedingJoinPoint pjp,
                                     final Object target) {
-        try {
-            return ofNullable(objectMapper().writeValueAsString(target));
-        } catch (JsonProcessingException e) {
-            logger(pjp).error("Failed logging event of type {}", target.getClass(), e);
-            return empty();
-        }
+        return ofNullable(target);
     }
 
     private Logger logger(final ProceedingJoinPoint pjp) {
