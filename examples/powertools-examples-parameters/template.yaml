@@ -19,9 +19,17 @@ Resources:
       Handler: org.demo.parameters.ParametersFunction::handleRequest
       MemorySize: 512
       Tracing: Active
+      Timeout: 60
       Environment:
         Variables:
           LOG_LEVEL: INFO
+          #AWS_CODEGURU_PROFILER_ENABLED: TRUE
+          #AWS_CODEGURU_PROFILER_GROUP_ARN: arn:aws:codeguru-profiler:eu-central-1:262576971904:profilingGroup/PowertoolsIdempProfile
+          AWS_CODEGURU_PROFILER_GROUP_NAME: v3ProfileWithCrtFocus
+          AWS_CODEGURU_PROFILER_TARGET_REGION: eu-central-1
+          AWS_CODEGURU_PROFILER_HEAP_SUMMARY_ENABLED: TRUE
+          JAVA_TOOL_OPTIONS: -javaagent:/opt/codeguru-profiler-java-agent-standalone.jar
+
       Policies:
         - AWSSecretsManagerGetSecretValuePolicy:
             SecretArn: !Ref UserPwd

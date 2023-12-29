@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration packages="com.amazonaws.services.lambda.runtime.log4j2">
+<Configuration>
     <Appenders>
         <Console name="JsonAppender" target="SYSTEM_OUT">
-            <LambdaJsonLayout compact="true" eventEol="true"/>
+            <JsonTemplateLayout eventTemplateUri="classpath:LambdaJsonLayout.json" />
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="JsonLogger" level="INFO" additivity="false">
+        <Logger name="com.example" level="debug" additivity="false">
             <AppenderRef ref="JsonAppender"/>
         </Logger>
         <Root level="info">
